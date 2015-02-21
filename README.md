@@ -1,5 +1,10 @@
 # Forms API
 
+A forms api for handling the state of a form, mapping values into individual field values, and validation of 
+field values.
+
+Very much influenced by the play framework forms api, but without no dependencies except the Scala standard
+library.
 
 ## Api overview
 The forms API describes how data should be mapped and validated in a form. It is entirely decoupled from
