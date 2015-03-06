@@ -1,33 +1,17 @@
-name := "megaforms root"
+organization := "megaforms"
+version := "1.0-SNAPSHOT"
+scalaVersion := "2.11.6"
 
-organization in ThisBuild := "megaforms"
-version in ThisBuild := "1.0-SNAPSHOT"
-scalaVersion in ThisBuild := "2.11.6"
+name := "megaforms"
+libraryDependencies ++= Seq(
+  "org.monifu" %%% "minitest" % "0.12" % "test"
+)
+testFrameworks += new TestFramework("minitest.runner.Framework")
 
-licenses in ThisBuild := Seq(("Apache License, Version 2.0", url("http://www.apache.org/licenses/LICENSE-2.0")))
-
+licenses := Seq(("Apache License, Version 2.0", url("http://www.apache.org/licenses/LICENSE-2.0")))
 
 enablePlugins(ScalaJSPlugin)
 
-lazy val root = project.in(file("."))
-  .aggregate(megaformsJVM, megaformsJS)
-  .settings(
-    publish := {},
-    publishLocal := {},
-    libraryDependencies ++= Seq(
-      "org.monifu" %%% "minitest" % "0.12" % "test"
-    ),
-    testFrameworks += new TestFramework("minitest.runner.Framework")
-  )
-
-lazy val megaforms = crossProject.in(file(".")).
-  settings(
-    libraryDependencies ++= Seq(
-      "org.monifu" %%% "minitest" % "0.12" % "test"
-    )
-  )
-  .jvmSettings()
-  .jsSettings()
-
-lazy val megaformsJVM = megaforms.jvm
-lazy val megaformsJS = megaforms.js
+lazy val root = crossProject.in(file("."))
+lazy val megaformsJVM = root.jvm
+lazy val megaformsJS = root.js
