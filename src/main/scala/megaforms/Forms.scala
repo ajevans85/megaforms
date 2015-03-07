@@ -1,6 +1,6 @@
 package megaforms
 
-import mapping._
+import mapping.{Mapping => ActualMapping, _}
 
 import scala.collection.immutable.Seq
 
@@ -10,6 +10,7 @@ import scala.collection.immutable.Seq
 object Forms {
 
   // quick imports
+  type Mapping[T] = ActualMapping[T]
   type Form[T] = megaforms.Form[T]
   type Constraint[T] = megaforms.validation.Constraint[T]
   val Constraint = validation.Constraint
