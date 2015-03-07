@@ -4,11 +4,6 @@ import scala.collection.immutable.Seq
 import scala.language.existentials
 import mapping.Mapping
 
-
-
-
-
-
 /**
  * A form represents the current state of a form, it knows of the mapping - how to map a tree of
  * field values into the value T and how to validate. Decoupled from react.
