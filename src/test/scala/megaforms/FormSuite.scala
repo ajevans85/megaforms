@@ -48,6 +48,12 @@ object FormSuite extends SimpleTestSuite {
     assertEquals(form.value, None)
   }
 
+  test("Form factory method validates empty form") {
+    val form = Form(integer.verifying(positive))
+    assertEquals(form.errors.size, 1)
+
+  }
+
   test("apply on a form instance returns a field abstraction for a path") {
     val form = Form(simpleMapping).fill(("1", "2"))
 

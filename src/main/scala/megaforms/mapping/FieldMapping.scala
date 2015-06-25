@@ -18,13 +18,17 @@ private[megaforms] case class FieldMapping[T](
     constraints.flatMap(_.validate(t)).map(error => FormError(path, error))
 
   def unmap(data: Map[String, Any]): Either[Seq[FormError], T] =
-    format.parse(data(path)).fold(
-      error => Left(Seq(FormError(path, error))),
-      { t =>
-        val validationErrors = validate(t)
-        if (validationErrors.isEmpty) Right(t)
-        else Left(validationErrors)
-      }
+    data.get(path).fold[Either[Seq[FormError], T]](
+      Left(Seq(FormError(path, "Required value")))
+    )(value =>
+      format.parse(value).fold(
+        error => Left(Seq(FormError(path, error))),
+        { t =>
+          val validationErrors = validate(t)
+          if (validationErrors.isEmpty) Right(t)
+          else Left(validationErrors)
+        }
+      )
     )
 
 

@@ -4,6 +4,32 @@ import scala.collection.immutable.Seq
 import scala.language.existentials
 import mapping.Mapping
 
+object Form {
+
+  /**
+   * @return A new empty form with the given mapping, validations applied
+   */
+  def apply[T](mapping: Mapping[T]): Form[T] =
+    apply[T](mapping, None)
+
+
+  /**
+   * @param value A possible value to put in the form
+   * @return A new form, either empty and validated or with the given ```T``` unmapped and validated
+   */
+  def apply[T](mapping: Mapping[T], value: Option[T]) = {
+    val emptyForm = new Form(mapping, Map.empty, None, Seq.empty)
+    value.fold(
+      // trigger a validation of "no data"
+      emptyForm.update(Map.empty)
+    )(t =>
+      emptyForm.fill(t)
+    )
+
+  }
+
+}
+
 /**
  * A form represents the current state of a form, it knows of the mapping - how to map a tree of
  * field values into the value T and how to validate. Decoupled from react.
@@ -16,7 +42,7 @@ import mapping.Mapping
  * @param errors If there was error parsing a T then this is those
  * @tparam T The type of object that the form represents
  */
-final case class Form[T](mapping: Mapping[T], data: Map[String, Any] = Map.empty, value: Option[T] = None, errors: Seq[FormError] = Seq.empty) {
+final case class Form[T] private(mapping: Mapping[T], data: Map[String, Any], value: Option[T], errors: Seq[FormError]) {
 
   /** errors for the entire form, not individual fields */
   def globalErrors: Seq[FormError] = errors.filter(_.path == "")
