@@ -2,6 +2,7 @@ package megaforms
 
 import Forms._
 import Constraints._
+import megaforms.validation.Constraint
 import minitest.SimpleTestSuite
 
 object FormSuite extends SimpleTestSuite {

@@ -1,6 +1,7 @@
 package megaforms
 
 import Forms._
+import megaforms.validation.Constraint
 import minitest.SimpleTestSuite
 
 object FormsSuite extends SimpleTestSuite {
@@ -75,6 +76,14 @@ object FormsSuite extends SimpleTestSuite {
     assertEquals(mapped, Map("" -> 1))
     val result = mapping.unmap(mapped)
     assertEquals(result, Right(1))
+  }
+
+  test("validation adds validation to field") {
+    val mapping = keep[Int].verifying(Constraint.apply[Int](n => if (n != 0) Some("Value must be 0") else None))
+    assert(mapping.validate(1).nonEmpty)
+
+    val unmapped = mapping.unmap(Map("" -> 1))
+    assert(unmapped.isLeft)
   }
 
 }
