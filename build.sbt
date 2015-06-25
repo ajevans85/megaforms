@@ -13,8 +13,5 @@ licenses := Seq(("Apache License, Version 2.0", url("http://www.apache.org/licen
 enablePlugins(ScalaJSPlugin)
 
 lazy val root = crossProject.in(file("."))
-  .settings(
-    publishLocal := {}
-  )
 lazy val megaformsJVM = root.jvm
 lazy val megaformsJS = root.js
