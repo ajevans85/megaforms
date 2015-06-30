@@ -39,7 +39,7 @@ val mapping: Mapping[MyModel] = mapping(
       "name" -> text
     )(Fruit)(Fruit.unapply)
   ).verifying(Constraint(fs => if (fs.isEmpty) Option("You must have at least one fruit") else None))
-)
+)(MyModel)(MyModel.unapply)
 
 val form: Form[MyModel] = Form(mapping)
 ```
